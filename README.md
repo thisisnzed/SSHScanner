@@ -24,7 +24,7 @@ You can reuse SSHScanner but make sure you comply with the [LICENSE](https://git
 ## Usage
 
 * I. Download the [latest release](https://github.com/thisisnzed/SSHScanner/releases) of SSHScanner
-* II. Run the program with **java -jar SSHScanner.jar -combo combo.txt -threads 1 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose true
+* II. Run the program with **java -jar SSHScanner.jar -combo combo.txt -threads 1 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose true**
 
 ## Arguments
 
