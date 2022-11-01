@@ -24,6 +24,7 @@ public class SSHScanner {
         this.argumentParser = new ArgumentParser(this.configuration, args);
         this.configuration.set("combo", "combo.txt");
         this.configuration.set("threads", 1);
+        this.configuration.set("host", "");
         this.configuration.set("port", 22);
         this.configuration.set("timeout", 6000);
         this.configuration.set("webhook", "");
@@ -40,7 +41,7 @@ public class SSHScanner {
     public void start() {
         IntStream.range(0, Integer.parseInt(String.valueOf(this.configuration.get("threads")))).forEach(i -> new Thread(() -> {
             while (true) {
-                final String host = (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1);
+                final String host = String.valueOf(this.configuration.get("host")).equals("") ? (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1) : (String) this.configuration.get("host");
                 if (!hosts.containsKey(host))
                     this.combo.getCombo().stream().filter(combo -> hosts.getOrDefault(host, true)).forEach(combo -> hosts.put(host, session.connect(host, combo[0], combo[1])));
             }
