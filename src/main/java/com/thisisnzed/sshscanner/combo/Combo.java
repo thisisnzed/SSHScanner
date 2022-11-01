@@ -23,7 +23,13 @@ public class Combo {
         } catch (final Exception exception) {
             exception.printStackTrace();
         }
-        Logger.log("Loaded " + this.combo.size() + " combinations !");
+        final int combinations = this.combo.size();
+        if(combinations == 0) {
+            Logger.log("The file must have at least one combo with the format 'username:password'");
+            System.exit(-1);
+            return;
+        }
+        Logger.log("Loaded " + combinations + " combinations !");
     }
 
     public ArrayList<String[]> getCombo() {
