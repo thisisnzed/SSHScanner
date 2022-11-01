@@ -12,7 +12,7 @@ You can reuse SSHScanner but make sure you comply with the [LICENSE](https://git
     <dependency>
         <groupId>com.thisisnzed</groupId>
         <artifactId>SSHScanner</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
@@ -36,7 +36,4 @@ Note: Each argument is optional
 * **-timeout <int>** | Time (in ms) before the program marks a server as unavailable (default: 6000)
 * **-webhook <url>** | Discord webhook where credentials will be sent (default: "")
 * **-verbose <boolean>** | Whether or not to display failed attempts on the console (default: true)
-
-
-
-
+* **-host <IP address>** | **WARNING: Only for bruteforce specific host** | Use this parameter ONLY if you want to perform a bruteforce attack on a specific SSH server - if you use this parameter you only will attack the requested server and not millions of random servers around the world (default: "")
