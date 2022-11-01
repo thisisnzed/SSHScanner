@@ -22,8 +22,7 @@ public class SSHScanner {
     public SSHScanner(final String[] args) {
         this.configuration = new Configuration();
         this.argumentParser = new ArgumentParser(this.configuration, args);
-        final String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getFile().substring(1);
-        this.configuration.set("combo", path.replace(path.substring(path.lastIndexOf('/') + 1), "").replace("/", "\\") + "combo.txt");
+        this.configuration.set("combo", "combo.txt");
         this.configuration.set("threads", 1);
         this.configuration.set("port", 22);
         this.configuration.set("timeout", 6000);
