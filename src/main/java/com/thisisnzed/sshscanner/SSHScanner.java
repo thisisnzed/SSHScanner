@@ -64,7 +64,7 @@ public class SSHScanner {
                         host = optional.get();
                         this.ipList.remove(host);
                     } else {
-                        System.exit(-1);
+                        Thread.currentThread().interrupt();
                         return;
                     }
                 } else
