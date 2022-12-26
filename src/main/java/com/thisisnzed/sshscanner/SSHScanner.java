@@ -2,6 +2,7 @@ package com.thisisnzed.sshscanner;
 
 import com.jcraft.jsch.JSch;
 import com.thisisnzed.sshscanner.addons.impl.Combo;
+import com.thisisnzed.sshscanner.addons.impl.PortList;
 import com.thisisnzed.sshscanner.addons.impl.Range;
 import com.thisisnzed.sshscanner.arguments.ArgumentParser;
 import com.thisisnzed.sshscanner.arguments.Configuration;
@@ -24,6 +25,7 @@ public class SSHScanner {
     private final Random random;
     private final ConcurrentHashMap<String, Boolean> hosts;
     private final Combo combo;
+    private PortList portList;
     private ConcurrentLinkedQueue<String> ipList;
     private Range range;
 
@@ -35,6 +37,7 @@ public class SSHScanner {
         this.configuration.set("threads", 1);
         this.configuration.set("host", "");
         this.configuration.set("port", 22);
+        this.configuration.set("portlist", "");
         this.configuration.set("timeout", 6000);
         this.configuration.set("webhook", "");
         this.configuration.set("verbose", true);
@@ -49,7 +52,9 @@ public class SSHScanner {
             this.range = new Range(this.configuration, "range", '.');
             this.performAdder();
         }
-        this.session = new Session(combo, this.configuration, new JSch(), new java.util.Properties());
+        if (!this.configuration.get("host").equals("") && !this.configuration.get("portlist").equals(""))
+            this.portList = new PortList(this.configuration, "portlist", ' ');
+        this.session = new Session(this.combo, this.configuration, new JSch(), new java.util.Properties(), this.portList);
     }
 
     public void start() {
@@ -68,10 +73,9 @@ public class SSHScanner {
                         return;
                     }
                 } else
-                    host = (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1) + "." + (random.nextInt(254) + 1);
-                if (!hosts.containsKey(host)) {
-                    this.combo.getList().stream().filter(combo -> hosts.getOrDefault(host, true)).forEach(combo -> hosts.put(host, session.connect(host, combo.split(":")[0], combo.split(":")[1])));
-                }
+                    host = (this.random.nextInt(254) + 1) + "." + (this.random.nextInt(254) + 1) + "." + (this.random.nextInt(254) + 1) + "." + (this.random.nextInt(254) + 1);
+                if (!this.hosts.containsKey(host))
+                    this.combo.getList().stream().filter(combo -> this.hosts.getOrDefault(host, true)).forEach(combo -> this.hosts.put(host, this.session.connect(host, combo.split(":")[0], combo.split(":")[1])));
             }
         }).start());
     }
@@ -86,8 +90,7 @@ public class SSHScanner {
     private ArrayList<String> getNumbers(final String range) {
         final ArrayList<String> numbers = new ArrayList<>();
         if (range.contains("-"))
-            for (int k = Integer.parseInt(range.substring(0, range.indexOf("-"))); k <= Integer
-                    .parseInt(range.substring(range.indexOf("-") + 1)); k++)
+            for (int k = Integer.parseInt(range.substring(0, range.indexOf("-"))); k <= Integer.parseInt(range.substring(range.indexOf("-") + 1)); k++)
                 numbers.add(Integer.toString(k));
         else
             numbers.add(range);

@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public abstract class Addon {
 
-    private ArrayList<String> list;
+    private final ArrayList<String> list;
 
     public Addon(final Configuration configuration, final String addonName, final char needed) {
         this.list = new ArrayList<>();
@@ -22,7 +22,7 @@ public abstract class Addon {
             final Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 final String nextLine = scanner.nextLine();
-                if (nextLine.contains(String.valueOf(needed)))
+                if (nextLine.contains(String.valueOf(needed)) || needed == ' ')
                     this.list.add(nextLine);
             }
         } catch (final Exception exception) {
